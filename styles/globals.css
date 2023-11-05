@@ -2,26 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.login-form {
+  @apply w-screen h-screen relative;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.login-form .login-bg {
+  @apply fixed inset-0 bg-cover bg-no-repeat -z-10;
+  background-image: url("../assets/images/form-bg.jpeg");
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.login-form label {
+  @apply text-white text-lg block mb-2;
+}
+
+.login-form .login-input {
+  @apply text-white border border-white/40 rounded-md block bg-transparent w-full p-2;
+}
+
+.login-form .login-input:focus {
+  @apply border-2;
 }
