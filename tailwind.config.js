@@ -6,7 +6,8 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./layouts/**/*.{js,ts,jsx,tsx,mdx}",
-    "./modules/**/*.{js,ts,jsx,tsx,mdx}"
+    "./modules/**/*.{js,ts,jsx,tsx,mdx}",
+    "./api/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
