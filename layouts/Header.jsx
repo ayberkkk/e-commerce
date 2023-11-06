@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import CategoryList from "@/pages/api/category";
 import Link from "next/link";
 import { FcCloth } from "react-icons/fc";
@@ -11,7 +11,7 @@ import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
 
 export default function Header() {
-  const [userLoggedIn, setUserLoggedIn] = useState();
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState();
 
@@ -29,7 +29,7 @@ export default function Header() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [auth]);
 
   const handleLogout = () => {
     signOut(auth)
@@ -45,7 +45,6 @@ export default function Header() {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
   const mobileToggle = () => {
     setMobile(!mobile);
   };

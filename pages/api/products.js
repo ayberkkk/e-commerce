@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -31,7 +32,8 @@ function ProductList() {
   return (
     <>
       {products.map((product) => (
-        <div
+        <Link
+          href={`/products/${product.id}`}
           key={product.id}
           className="border border-gray-200 rounded-lg p-3 m-3 px-4 relative z-10 scale-100 overflow-hidden"
         >
@@ -79,7 +81,7 @@ function ProductList() {
           >
             Add
           </button>
-        </div>
+        </Link>
       ))}
     </>
   );
