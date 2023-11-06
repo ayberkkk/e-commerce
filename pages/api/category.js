@@ -13,7 +13,7 @@ function CategoryList() {
   return (
     <ul className="justify-center lg:flex block">
       {categories.map((category) => (
-        <li className="mt-5 table mx-auto relative top-36">
+        <li className="mt-5 lg:block table mx-auto relative lg:-top-[10px] top-36">
           <Link
             href={category}
             key={category}
