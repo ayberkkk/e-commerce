@@ -129,7 +129,7 @@ export default function Header() {
               )}
             </Menu>
             <Link
-              href={"/basket"}
+              href={"/"}
               className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white"
             >
               <PiBasketLight size={20} />
