@@ -37,14 +37,14 @@ export default function LoginForm() {
         }}
         onSubmit={handleLogin}
       >
-        <Form className="lg:absolute left-40 top-[30%] lg:p-0 p-4">
+       <Form className="absolute lg:left-40 left-6 top-[20%] p-4">
           <div className="flex items-center gap-3">
             <FcFactory size={70} className="mb-3" />
             <p className="text-white font-bold text-lg">
               E-Commerce from aborkkk
             </p>
           </div>
-          <div>
+          <div>F
             <label htmlFor="email">Email</label>
             <Field
               id="email"

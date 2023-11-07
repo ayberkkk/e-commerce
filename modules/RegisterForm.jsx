@@ -40,7 +40,7 @@ export default function RegisterForm() {
         }}
         onSubmit={handleRegistration}
       >
-        <Form className="lg:absolute left-40 top-[30%] lg:p-0 p-3">
+        <Form className="absolute lg:left-40 left-6 top-[20%] p-4">
           <div className="flex items-center gap-3">
             <FcOrganization size={70} className="mb-3" />
             <p className="text-white font-bold text-lg">

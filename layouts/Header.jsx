@@ -8,12 +8,15 @@ import { GoPackage } from "react-icons/go";
 import { SlLogout } from "react-icons/sl";
 import { PiBasketLight } from "react-icons/pi";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
-import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 export default function Header() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState();
+
+  const router = useRouter();
 
   const auth = getAuth();
 
@@ -35,7 +38,7 @@ export default function Header() {
     signOut(auth)
       .then(() => {
         localStorage.removeItem(userLoggedIn, false);
-        console.log("Çıkış başarılı");
+        router.push("/");
       })
       .catch((error) => {
         console.error("Çıkış sırasında hata oluştu: ", error);
@@ -50,20 +53,32 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white border border-b-2 flex justify-between items-center px-6 relative z-[99]">
-      <div className="lg:block flex items-center relative z-10">
+    <header className="bg-white border border-b-2 flex justify-between items-center px-6 relative z-[99] p-3">
+      <div className="lg:block flex items-center">
         <FcCloth size={50} />
-        <AiOutlineMenu
-          size={30}
-          className="lg:hidden block"
-          onClick={mobileToggle}
-        />
+        {mobile ? (
+          <AiOutlineClose
+            size={30}
+            className="lg:hidden block z-20 absolute right-10 top-10"
+            onClick={mobileToggle}
+          />
+        ) : (
+          <AiOutlineMenu
+            size={30}
+            className="lg:hidden block"
+            onClick={mobileToggle}
+          />
+        )}
       </div>
       <nav className="lg:block hidden">
         <CategoryList />
       </nav>
       {mobile && (
-        <div className="fixed top-0 left-0 bg-white w-full h-screen transition-all ease-out">
+        <div
+          className={`fixed z-10 top-0 left-0 bg-white w-full h-screen transition-transform ${
+            mobile ? "translate-y-0" : "-translate-y-full"
+          } ease-out duration-500`}
+        >
           <CategoryList />
         </div>
       )}
@@ -113,9 +128,12 @@ export default function Header() {
                 </Menu.Items>
               )}
             </Menu>
-            <button className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white">
+            <Link
+              href={"/basket"}
+              className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white"
+            >
               <PiBasketLight size={20} />
-            </button>
+            </Link>
           </>
         ) : (
           <>
