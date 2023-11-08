@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import CategoryList from "@/pages/api/category";
 import Link from "next/link";
 import { FcCloth } from "react-icons/fc";
+import { AiOutlineHeart } from "react-icons/ai";
 import { Menu } from "@headlessui/react";
 import { GoPackage } from "react-icons/go";
 import { SlLogout } from "react-icons/sl";
@@ -10,6 +11,7 @@ import { PiBasketLight } from "react-icons/pi";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function Header() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -55,7 +57,13 @@ export default function Header() {
   return (
     <header className="bg-white border border-b-2 flex justify-between items-center px-6 relative z-[99] p-3">
       <div className="lg:block flex items-center">
-        <FcCloth size={50} />
+        <Image
+          className="w-20 h-auto object-cover"
+          src="/logo.png"
+          layout="responsive"
+          width={100}
+          height={40}
+        />
         {mobile ? (
           <AiOutlineClose
             size={30}
@@ -65,7 +73,7 @@ export default function Header() {
         ) : (
           <AiOutlineMenu
             size={30}
-            className="lg:hidden block"
+            className="lg:hidden block ml-3"
             onClick={mobileToggle}
           />
         )}
@@ -132,6 +140,12 @@ export default function Header() {
               href={"/"}
               className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white"
             >
+              <AiOutlineHeart size={20} />
+            </Link>
+            <Link
+              href={"/"}
+              className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white"
+            >
               <PiBasketLight size={20} />
             </Link>
           </>
@@ -141,13 +155,13 @@ export default function Header() {
               className="bg-green-500 text-white rounded-md p-2 transition-all hover:bg-green-700"
               href="/user/login"
             >
-              Giriş Yap
+              Login
             </Link>
             <Link
               className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white"
               href="/user/register"
             >
-              Kayıt Ol
+              Register
             </Link>
           </>
         )}

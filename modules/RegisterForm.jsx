@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseConfig } from "@/pages/api/firebase";
 import Swal from "sweetalert2";
-import { FcOrganization } from "react-icons/fc";
+import Image from "next/image";
 import Link from "next/link";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
@@ -40,9 +40,17 @@ export default function RegisterForm() {
         }}
         onSubmit={handleRegistration}
       >
-        <Form className="absolute lg:left-40 left-6 top-[20%] p-4">
+        <Form className="absolute lg:left-40 left-0 top-[20%] p-4 m-3">
           <div className="flex items-center gap-3">
-            <FcOrganization size={70} className="mb-3" />
+            <Link href={"/"}>
+              <Image
+                className="w-full h-auto object-cover p-3"
+                layout="responsive"
+                src="/logo.png"
+                width={100}
+                height={40}
+              />
+            </Link>
             <p className="text-white font-bold text-lg">
               E-Commerce from aborkkk
             </p>
@@ -98,7 +106,7 @@ export default function RegisterForm() {
           <div className="table m-auto w-full text-center">
             <button
               type="submit"
-              className="bg-blue-500 w-full rounded-md text-white mt-4 p-3 transition-all hover:bg-blue-950"
+              className="bg-[#517a98] w-full m-auto table rounded-md text-white mt-4 p-3 transition-all hover:bg-[#517a98]/80"
             >
               Register
             </button>
@@ -106,7 +114,7 @@ export default function RegisterForm() {
             <Link href={"/user/login"}>
               <button
                 type="submit"
-                className="bg-green-500 w-1/2 m-auto table rounded-md text-white mt-4 p-3 transition-all hover:bg-blue-950"
+                className="bg-green-500 w-1/2 m-auto table rounded-md text-white mt-4 p-3 transition-all hover:bg-[#517a98]/80"
               >
                 Login
               </button>

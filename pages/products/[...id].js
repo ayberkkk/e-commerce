@@ -1,9 +1,32 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Header from "@/layouts/Header";
+import Swal from "sweetalert2";
 import Image from "next/image";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
+import { BsStar, BsStarFill } from "react-icons/bs";
+import { FcCompactCamera } from "react-icons/fc";
+import { AiOutlineHeart } from "react-icons/ai";
+import Link from "next/link";
+
+function StarRating({ rating }) {
+  const maxRating = 5;
+  const fullStars = Math.floor(rating);
+
+  const starIcons = [];
+
+  for (let i = 1; i <= maxRating; i++) {
+    if (i <= fullStars) {
+      starIcons.push(<BsStarFill key={i} className="text-yellow-400" />);
+    } else {
+      starIcons.push(<BsStar key={i} className=" text-gray-300" />);
+    }
+  }
+
+  return <div className="flex items-center">{starIcons}</div>;
+}
 
 const ProductDetail = () => {
   const router = useRouter();
@@ -12,12 +35,14 @@ const ProductDetail = () => {
   const [productDetail, setProductDetail] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
   useEffect(() => {
     if (id) {
       fetch(`https://fakestoreapi.com/products/${id}`)
         .then((response) => response.json())
         .then((data) => setProductDetail(data))
-        .catch((error) => console.error("Ürün detayları alınamadı:", error));
+        .catch((error) => console.error("---", error));
     }
   }, [id]);
 
@@ -31,16 +56,46 @@ const ProductDetail = () => {
     }
   };
 
-  const [isImageZoomed, setImageZoomed] = useState(false);
+  const addToCart = () => {
+    if (quantity === 0) {
+      Swal.fire({
+        title: "Product Not Added to Cart",
+        text: "The quantity is 0, so the product cannot be added to the cart.",
+        icon: "error",
+      });
+    } else {
+      Swal.fire({
+        title: "Product Added to Cart",
+        html: `<b>${productDetail.title}</b> has been added to your cart with a quantity of <b>${quantity}</b>.`,
+        icon: "success",
+      });
+    }
+  };
+
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserLoggedIn(true);
+      } else {
+        setUserLoggedIn(false);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [auth]);
 
   return (
     <>
       <Header />
-      <div className="container mx-auto lg:pt-10">
+      <div className="container mx-auto lg:pt-10 lg:px-12">
         {productDetail ? (
           <>
             <nav
-              class="flex mb-10 py-3 text-gray-700 px-3 items-center"
+              class="flex lg:mb-10 mb-3 py-3 text-gray-700 px-3 items-center"
               aria-label="Breadcrumb"
             >
               <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -117,9 +172,26 @@ const ProductDetail = () => {
                 />
               </div>
               <div>
-                <p className="font-bold text-2xl">{productDetail.title}</p>
-                <ul className="flex items-center justify-between">
-                  <li className="text-green-500 font-bold text-4xl">
+                <p>
+                  <span className="font-bold lg:text-3xl mr-2 uppercase">
+                    {productDetail.category}
+                  </span>
+                  <span className="font-light lg:text-3xl text-2xl block">
+                    {productDetail.title}
+                  </span>
+                </p>
+                <div className="flex items-center gap-2 mt-6 mb-2">
+                  <StarRating rating={productDetail.rating.rate} />
+                  <span className="text-gray-400 text-base">
+                    {productDetail.rating.rate}{" "}
+                  </span>
+                  <span className="text-gray-400 text-xs">
+                    ({productDetail.rating.count})
+                  </span>
+                  <FcCompactCamera />
+                </div>
+                <ul className="flex items-center lg:justify-start justify-between gap-10 mt-6 mb-5">
+                  <li className="text-green-500 font-bold text-5xl">
                     {productDetail.price}
                     <span className="text-lg ml-1">$</span>
                   </li>
@@ -127,7 +199,7 @@ const ProductDetail = () => {
                     <ul className="flex items-center mt-4">
                       <li>
                         <button
-                          className="border text-3xl bg-blue-400 hover:bg-blue-500 text-white w-[40px] h-[40px] rounded-tl-lg rounded-bl-lg"
+                          className="border text-3xl bg-[#517a98] hover:bg-[#517a98]/80 text-white w-[40px] h-[40px] rounded-tl-lg rounded-bl-lg"
                           onClick={decreaseQuantity}
                         >
                           -
@@ -138,7 +210,7 @@ const ProductDetail = () => {
                       </li>
                       <li>
                         <button
-                          className="border text-3xl bg-blue-400 hover:bg-blue-500 text-white w-[40px] h-[40px] rounded-tr-lg rounded-br-lg"
+                          className="border text-3xl bg-[#517a98] hover:bg-[#517a98]/80 text-white w-[40px] h-[40px] rounded-tr-lg rounded-br-lg"
                           onClick={increaseQuantity}
                         >
                           +
@@ -147,7 +219,7 @@ const ProductDetail = () => {
                     </ul>
                   </li>
                 </ul>
-                <div className="w-full">
+                <div className="w-full mt-2 mb-2">
                   <div className="lg:w-1/2 rounded-2xl bg-white">
                     <Disclosure as="div" className="mt-2">
                       {({ open }) => (
@@ -168,12 +240,45 @@ const ProductDetail = () => {
                     </Disclosure>
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className="text-base w-full mt-3 p-2 bg-green-500 hover:bg-green-600 rounded-lg text-white transition-all"
-                >
-                  Add
-                </button>
+                {userLoggedIn ? (
+                  <div className="lg:w-[91%] w-full lg:relative fixed lg:bg-transparent bg-white lg:border-0 border-t-2 -bottom-2 left-0 flex items-center gap-3 justify-center mt-2 mb-2 lg:px-0 px-1 lg:py-0 py-1">
+                    <button
+                      type="submit"
+                      className="text-base w-full mt-3 p-2 bg-[#517a98] hover:bg-[#517a98]/80 rounded-lg text-white transition-all"
+                      onClick={addToCart}
+                    >
+                      Add
+                    </button>
+                    <div className="group mt-2 cursor-pointer">
+                      <div className="flex items-center justify-center border border-gray-500 rounded-full w-9 h-9 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
+                        <AiOutlineHeart
+                          size={18}
+                          className="text-gray-500 group-hover:text-white"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="lg:w-[91%] w-full lg:relative fixed lg:bg-transparent bg-white lg:border-0 border-t-2 -bottom-2 left-0 flex items-center gap-3 justify-center mt-2 mb-2 lg:px-0 px-1 lg:py-0 py-1">
+                    <Link
+                      href={"/user/login"}
+                      className="text-base text-center w-full mt-3 p-2 bg-green-500 hover:bg-green-600 rounded-lg text-white transition-all"
+                    >
+                      Login
+                    </Link>
+                    <Link href={"/user/register"}>
+                      <div className="group mt-2 cursor-pointer">
+                        <div className="flex items-center justify-center border border-gray-500 rounded-full w-9 h-9 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
+                          <AiOutlineHeart
+                            size={18}
+                            className="text-gray-500 group-hover:text-white"
+                          />
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+                <></>
               </div>
             </div>
           </>

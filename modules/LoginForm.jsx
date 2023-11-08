@@ -5,7 +5,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Swal from "sweetalert2";
 import { firebaseConfig } from "@/pages/api/firebase";
 import { useRouter } from "next/router";
-import { FcFactory } from "react-icons/fc";
+import Image from "next/image";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
 
@@ -37,14 +37,23 @@ export default function LoginForm() {
         }}
         onSubmit={handleLogin}
       >
-       <Form className="absolute lg:left-40 left-6 top-[20%] p-4">
+        <Form className="absolute lg:left-40 left-0 top-[20%] p-4 m-3">
           <div className="flex items-center gap-3">
-            <FcFactory size={70} className="mb-3" />
+            <Link href={"/"}>
+              <Image
+                className="w-full h-auto object-cover p-3"
+                layout="responsive"
+                src="/logo.png"
+                width={100}
+                height={40}
+              />
+            </Link>
+
             <p className="text-white font-bold text-lg">
               E-Commerce from aborkkk
             </p>
           </div>
-          <div>F
+          <div>
             <label htmlFor="email">Email</label>
             <Field
               id="email"
@@ -85,7 +94,7 @@ export default function LoginForm() {
           <div className="table m-auto w-full text-center">
             <button
               type="submit"
-              className="bg-green-500 w-full rounded-md text-white mt-4 p-3 transition-all hover:bg-blue-950"
+              className="bg-green-500 w-full rounded-md text-white mt-4 p-3 transition-all hover:bg-[#517a98]/80"
             >
               Login
             </button>
@@ -93,7 +102,7 @@ export default function LoginForm() {
             <Link href={"/user/register"}>
               <button
                 type="submit"
-                className="bg-blue-500 w-1/2 m-auto table rounded-md text-white mt-4 p-3 transition-all hover:bg-blue-950"
+                className="bg-[#517a98] w-1/2 m-auto table rounded-md text-white mt-4 p-3 transition-all hover:bg-[#517a98]/80"
               >
                 Register
               </button>

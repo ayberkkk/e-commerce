@@ -3,7 +3,26 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/layouts/Header";
-import Swal from "sweetalert2"; // Swal ekledik
+import { BsStar, BsStarFill } from "react-icons/bs";
+import { FcCompactCamera } from "react-icons/fc";
+import { AiOutlineHeart } from "react-icons/ai";
+
+function StarRating({ rating }) {
+  const maxRating = 5;
+  const fullStars = Math.floor(rating);
+
+  const starIcons = [];
+
+  for (let i = 1; i <= maxRating; i++) {
+    if (i <= fullStars) {
+      starIcons.push(<BsStarFill key={i} className="text-yellow-400" />);
+    } else {
+      starIcons.push(<BsStar key={i} className=" text-gray-300" />);
+    }
+  }
+
+  return <div className="flex items-center">{starIcons}</div>;
+}
 
 function CategoryPage() {
   const [products, setProducts] = useState([]);
@@ -70,47 +89,33 @@ function CategoryPage() {
                   alt={product.title}
                 />
               </Link>
-              <div className="relative z-50 border-t-2 w-full pt-3 pb-3">
-                <h3 className="lg:text-lg font-normal">
-                  {product.title.slice(0, 20)}
-                </h3>
-                <ul className="lg:flex items-center justify-between table mx-auto w-full">
-                  <li className="text-green-500 font-bold text-2xl">
-                    {product.price}
-                    <span className="text-lg ml-1">$</span>
-                  </li>
-                  <li className="relative z-50">
-                    <ul className="inline-flex items-center mt-4 justify-center w-full">
-                      <li>
-                        <button
-                          className="border text-3xl bg-blue-400 hover:bg-blue-500 text-white w-[40px] h-[40px] rounded-tl-lg rounded-bl-lg"
-                          onClick={() => decrease(product)}
-                        >
-                          -
-                        </button>
-                      </li>
-                      <li className="w-[30px] h-[30px] text-center mt-2 bg-white/90">
-                        {product.amount}
-                      </li>
-                      <li>
-                        <button
-                          className="border text-3xl bg-blue-400 hover:bg-blue-500 text-white w-[40px] h-[40px] rounded-tr-lg rounded-br-lg"
-                          onClick={() => increase(product)}
-                        >
-                          +
-                        </button>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-                <button
-                  type="submit"
-                  className="text-base w-full mt-3 p-2 bg-green-500 hover:bg-green-600 rounded-lg text-white transition-all"
-                  onClick={() => addProductToCart(product)}
-                >
-                  Add
-                </button>
+              <div className="absolute right-1 top-2 z-20 cursor-pointer group">
+              <div className="flex items-center justify-center border border-gray-500 rounded-full w-8 h-8 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
+                <AiOutlineHeart
+                  size={18}
+                  className="text-gray-500 group-hover:text-white"
+                />
               </div>
+            </div>
+            <div className="relative z-50 border-t-2 w-full pt-3 pb-3">
+              <h3 className="lg:text-base font-normal">
+                <span className="font-bold uppercase mr-1">
+                  {product.category}
+                </span>
+                {product.title.slice(0, 20)}
+              </h3>
+              <div className="flex gap-2 mt-2 mb-2">
+                <StarRating rating={product.rating.rate} />
+                <span className="text-gray-400 text-xs">
+                  ({product.rating.count})
+                </span>
+                <FcCompactCamera />
+              </div>
+              <div className="text-green-500 font-bold text-3xl mt-2 mb-2">
+                {product.price}
+                <span className="text-lg ml-1">$</span>
+              </div>
+            </div>
             </div>
           ))}
         </ul>
