@@ -58,10 +58,10 @@ export default function Header() {
     <header className="bg-white border border-b-2 flex justify-between items-center px-6 relative z-[99] p-3">
       <div className="lg:block flex items-center">
         <Image
-          className="w-20 h-auto object-cover"
+          className="w-10 h-auto object-cover"
           src="/logo.png"
-          layout="responsive"
-          width={100}
+          // layout="responsive"
+          width={50}
           height={40}
         />
         {mobile ? (

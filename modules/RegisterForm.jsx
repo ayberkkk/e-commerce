@@ -45,7 +45,7 @@ export default function RegisterForm() {
             <Link href={"/"}>
               <Image
                 className="w-full h-auto object-cover p-3"
-                layout="responsive"
+                // layout="responsive"
                 src="/logo.png"
                 width={100}
                 height={40}
