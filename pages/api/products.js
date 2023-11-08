@@ -66,10 +66,10 @@ export default function ProductList() {
               </div>
             </Link>
             <div className="absolute right-1 lg:top-2 -top-2 z-20 cursor-pointer group">
-              <div className="flex items-center justify-center border border-gray-500 rounded-full w-8 h-8 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
+              <div className="flex items-center justify-center border border-white bg-[#f08d82] text-white rounded-full w-8 h-8 hover:border-[#f55645] group-hover:bg-[#f55645]">
                 <AiOutlineHeart
                   size={18}
-                  className="text-gray-500 group-hover:text-white"
+                  className="text-white"
                 />
               </div>
             </div>

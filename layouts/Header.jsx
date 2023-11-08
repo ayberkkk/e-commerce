@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import CategoryList from "@/pages/api/category";
 import Link from "next/link";
-import { FcCloth } from "react-icons/fc";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Menu } from "@headlessui/react";
 import { GoPackage } from "react-icons/go";
@@ -57,13 +56,15 @@ export default function Header() {
   return (
     <header className="bg-white border border-b-2 flex justify-between items-center px-6 relative z-[99] p-3">
       <div className="lg:block flex items-center">
-        <Image
-          className="w-10 h-auto object-cover"
-          src="/logo.png"
-          // layout="responsive"
-          width={50}
-          height={40}
-        />
+        <Link href={"/"}>
+          <Image
+            className="lg:w-[100px] h-auto object-cover"
+            src="/logo.png"
+            //  layout="responsive"
+            width={50}
+            height={40}
+          />
+        </Link>
         {mobile ? (
           <AiOutlineClose
             size={30}
@@ -96,7 +97,7 @@ export default function Header() {
             <Menu as="div" className="relative">
               <div>
                 <Menu.Button
-                  className="flex items-center gap-2 bg-green-500 text-white rounded-md p-2 transition-all hover:bg-green-700"
+                  className="flex items-center gap-2 bg-[#517a98] text-white rounded-md p-2 transition-all hover:bg-green-700"
                   onClick={toggleMenu}
                 >
                   Account
@@ -136,15 +137,19 @@ export default function Header() {
                 </Menu.Items>
               )}
             </Menu>
-            <Link
-              href={"/"}
-              className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white"
-            >
-              <AiOutlineHeart size={20} />
+            <Link href={"/"}>
+              <div className="group">
+                <div className="flex items-center justify-center border border-[#f55645] rounded-full w-10 h-10 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
+                  <AiOutlineHeart
+                    size={18}
+                    className="text-[#f55645] group-hover:text-white"
+                  />
+                </div>
+              </div>
             </Link>
             <Link
               href={"/"}
-              className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white"
+              className="border border-[#517a98] text-black rounded-md p-2 bg-transparent transition-all hover:bg-[#517a98] hover:text-white"
             >
               <PiBasketLight size={20} />
             </Link>
@@ -152,13 +157,13 @@ export default function Header() {
         ) : (
           <>
             <Link
-              className="bg-green-500 text-white rounded-md p-2 transition-all hover:bg-green-700"
+              className="bg-[#517a98] text-white rounded-md p-2 transition-all hover:bg-green-500"
               href="/user/login"
             >
               Login
             </Link>
             <Link
-              className="border border-green-500 text-black rounded-md p-2 bg-transparent transition-all hover:bg-green-500 hover:text-white"
+              className="border border-[#517a98] text-black rounded-md p-2 bg-transparent transition-all hover:bg-[#517a98] hover:text-white"
               href="/user/register"
             >
               Register

@@ -8,16 +8,16 @@
 
 .login-form .login-bg {
   @apply fixed inset-0 bg-cover bg-no-repeat -z-10;
-  background-image: url("../assets/images/form-bg.jpeg");
+  background-image: url("../assets/images/wave.svg");
 }
 
 .login-form form {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(245, 245, 245, 0.638);
 }
 
 .login-form label {
@@ -25,7 +25,11 @@
 }
 
 .login-form .login-input {
-  @apply text-white border border-white/40 rounded-md block bg-transparent w-full p-2;
+  @apply text-white border border-white rounded-md block bg-transparent w-full p-2;
+}
+
+.login-form ::placeholder {
+  @apply text-white/70
 }
 
 .login-form .login-input:focus {

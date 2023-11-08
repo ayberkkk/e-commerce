@@ -37,7 +37,7 @@ export default function LoginForm() {
         }}
         onSubmit={handleLogin}
       >
-        <Form className="absolute lg:left-40 left-0 top-[20%] p-4 m-3">
+        <Form className="absolute lg:left-40 left-0 top-[24%] p-4 m-3">
           <div className="flex items-center gap-3">
             <Link href={"/"}>
               <Image
