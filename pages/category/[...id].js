@@ -3,30 +3,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/layouts/Header";
-import { BsStar, BsStarFill } from "react-icons/bs";
+import StarRating from "@/components/Star";
 import { FcCompactCamera } from "react-icons/fc";
 import { AiOutlineHeart } from "react-icons/ai";
 
-function StarRating({ rating }) {
-  const maxRating = 5;
-  const fullStars = Math.floor(rating);
-
-  const starIcons = [];
-
-  for (let i = 1; i <= maxRating; i++) {
-    if (i <= fullStars) {
-      starIcons.push(<BsStarFill key={i} className="text-yellow-400" />);
-    } else {
-      starIcons.push(<BsStar key={i} className=" text-gray-300" />);
-    }
-  }
-
-  return <div className="flex items-center">{starIcons}</div>;
-}
-
 function CategoryPage() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
   const router = useRouter();
   const { id } = router.query;
 
@@ -46,32 +27,6 @@ function CategoryPage() {
     }
   }, [id]);
 
-  const increase = (product) => {
-    product.amount += 1;
-    setCategoryData([...categoryData]);
-  };
-
-  const decrease = (product) => {
-    if (product.amount > 0) {
-      product.amount -= 1;
-      setCategoryData([...categoryData]);
-    }
-  };
-
-  const addProductToCart = (product) => {
-    if (product.amount > 0) {
-      setCart((prevCart) => [
-        ...prevCart,
-        { ...product, amount: product.amount },
-      ]);
-      Swal.fire({
-        title: "Product Added",
-        text: `${product.title} , ${product.amount} added to your cart.`,
-        icon: "success",
-      });
-    }
-  };
-
   return (
     <>
       <Header />
@@ -90,32 +45,32 @@ function CategoryPage() {
                 />
               </Link>
               <div className="absolute right-1 top-2 z-20 cursor-pointer group">
-              <div className="flex items-center justify-center border border-gray-500 rounded-full w-8 h-8 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
-                <AiOutlineHeart
-                  size={18}
-                  className="text-gray-500 group-hover:text-white"
-                />
+                <div className="flex items-center justify-center border border-gray-500 rounded-full w-8 h-8 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
+                  <AiOutlineHeart
+                    size={18}
+                    className="text-gray-500 group-hover:text-white"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="relative z-50 border-t-2 w-full pt-3 pb-3">
-              <h3 className="lg:text-base font-normal">
-                <span className="font-bold uppercase mr-1">
-                  {product.category}
-                </span>
-                {product.title.slice(0, 20)}
-              </h3>
-              <div className="flex gap-2 mt-2 mb-2">
-                <StarRating rating={product.rating.rate} />
-                <span className="text-gray-400 text-xs">
-                  ({product.rating.count})
-                </span>
-                <FcCompactCamera />
+              <div className="relative z-50 border-t-2 w-full pt-3 pb-3">
+                <h3 className="lg:text-base font-normal">
+                  <span className="font-bold uppercase mr-1">
+                    {product.category}
+                  </span>
+                  {product.title.slice(0, 20)}
+                </h3>
+                <div className="flex gap-2 mt-2 mb-2">
+                  <StarRating rating={product.rating.rate} />
+                  <span className="text-gray-400 text-xs">
+                    ({product.rating.count})
+                  </span>
+                  <FcCompactCamera />
+                </div>
+                <div className="text-green-500 font-bold text-3xl mt-2 mb-2">
+                  {product.price}
+                  <span className="text-lg ml-1">$</span>
+                </div>
               </div>
-              <div className="text-green-500 font-bold text-3xl mt-2 mb-2">
-                {product.price}
-                <span className="text-lg ml-1">$</span>
-              </div>
-            </div>
             </div>
           ))}
         </ul>

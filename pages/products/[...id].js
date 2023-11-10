@@ -1,41 +1,23 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Header from "@/layouts/Header";
-import Swal from "sweetalert2";
+import Link from "next/link";
 import Image from "next/image";
-import { BsStar, BsStarFill } from "react-icons/bs";
+import { useRouter } from "next/router";
+import Header from "@/layouts/Header";
+import { useMember } from "@/utils/const";
+import { addToCart } from "@/utils/const";
 import { FcCompactCamera } from "react-icons/fc";
 import { AiOutlineHeart } from "react-icons/ai";
-import Link from "next/link";
-
-function StarRating({ rating }) {
-  const maxRating = 5;
-  const fullStars = Math.floor(rating);
-
-  const starIcons = [];
-
-  for (let i = 1; i <= maxRating; i++) {
-    if (i <= fullStars) {
-      starIcons.push(<BsStarFill key={i} className="text-yellow-400" />);
-    } else {
-      starIcons.push(<BsStar key={i} className=" text-gray-300" />);
-    }
-  }
-
-  return <div className="flex items-center">{starIcons}</div>;
-}
+import StarRating from "@/components/Star";
+import AddToCartButton from "@/components/AddCart";
+import FavoriteButton from "@/components/FavoriteButton";
 
 const ProductDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-
   const [productDetail, setProductDetail] = useState(0);
   const [quantity, setQuantity] = useState(1);
-
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
-
-  const [cart, setCart] = useState([]); // Sepet state'i
+  const [cart, setCart] = useState([]);
+  const { userLoggedIn } = useMember();
 
   useEffect(() => {
     if (id) {
@@ -45,6 +27,13 @@ const ProductDetail = () => {
         .catch((error) => console.error("---", error));
     }
   }, [id]);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -56,69 +45,10 @@ const ProductDetail = () => {
     }
   };
 
-  // Sepeti localStorage'den yükle
-  useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
-    }
-  }, []);
-
   const updateCartInStorage = (updatedCart) => {
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
-
-  const addToCart = () => {
-    if (quantity === 0) {
-      Swal.fire({
-        title: "Product Not Added to Cart",
-        text: "The quantity is 0, so the product cannot be added to the cart.",
-        icon: "error",
-      });
-    } else {
-      // Ürünün sepette olup olmadığını kontrol et
-      const existingItemIndex = cart.findIndex((item) => item.id === id);
-
-      if (existingItemIndex !== -1) {
-        // Eğer ürün sepette ise, adeti güncelle
-        const updatedCart = [...cart];
-        updatedCart[existingItemIndex].quantity += quantity;
-        updateCartInStorage(updatedCart);
-      } else {
-        // Eğer ürün sepette değilse, yeni bir ürün olarak ekle
-        const newItem = {
-          id,
-          title: productDetail.title,
-          quantity,
-        };
-        const updatedCart = [...cart, newItem];
-        updateCartInStorage(updatedCart);
-      }
-
-      Swal.fire({
-        title: "Product Added to Cart",
-        html: `<b>${productDetail.title}</b> product has been added to your cart with a quantity of <b>${quantity}</b>.`,
-        icon: "success",
-      });
-    }
-  };
-
-  const auth = getAuth();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserLoggedIn(true);
-      } else {
-        setUserLoggedIn(false);
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [auth]);
 
   return (
     <>
@@ -253,20 +183,19 @@ const ProductDetail = () => {
                 </ul>
                 {userLoggedIn ? (
                   <div className="lg:w-1/2 w-full lg:relative fixed lg:bg-transparent bg-white lg:border-0 border-t-2 -bottom-2 left-0 flex items-center gap-3 justify-center mt-2 mb-2 lg:px-0 px-1 lg:py-0 py-1">
-                    <button
-                      type="submit"
-                      className="text-base w-full mt-3 p-2 bg-[#517a98] hover:bg-[#517a98]/80 rounded-lg text-white transition-all"
-                      onClick={addToCart}
-                    >
-                      Add
-                    </button>
+                    <AddToCartButton
+                      onClick={() =>
+                        addToCart(
+                          id,
+                          productDetail,
+                          quantity,
+                          cart,
+                          updateCartInStorage
+                        )
+                      }
+                    />
                     <div className="group mt-2 cursor-pointer">
-                      <div className="flex items-center justify-center border border-gray-500 rounded-full w-9 h-9 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
-                        <AiOutlineHeart
-                          size={18}
-                          className="text-gray-500 group-hover:text-white"
-                        />
-                      </div>
+                      <FavoriteButton productId={id} />
                     </div>
                   </div>
                 ) : (

@@ -1,50 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import CategoryList from "@/pages/api/category";
+import React, { useState } from "react";
 import Link from "next/link";
-import { AiOutlineHeart } from "react-icons/ai";
+import Image from "next/image";
+import CategoryList from "@/pages/api/category";
 import { Menu } from "@headlessui/react";
+import { useMember } from "@/utils/const";
+import { AiOutlineHeart } from "react-icons/ai";
 import { GoPackage } from "react-icons/go";
 import { SlLogout } from "react-icons/sl";
 import { PiBasketLight } from "react-icons/pi";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { useRouter } from "next/router";
-import Image from "next/image";
 
 export default function Header() {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState();
 
-  const router = useRouter();
-
-  const auth = getAuth();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserLoggedIn(true);
-      } else {
-        setUserLoggedIn(false);
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [auth]);
-
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        localStorage.removeItem(userLoggedIn, false);
-        router.push("/");
-      })
-      .catch((error) => {
-        console.error("Çıkış sırasında hata oluştu: ", error);
-      });
-  };
+  const { userLoggedIn, handleLogout } = useMember();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -60,7 +31,6 @@ export default function Header() {
           <Image
             className="lg:w-[100px] h-auto object-cover"
             src="/logo.png"
-            //  layout="responsive"
             width={50}
             height={40}
           />

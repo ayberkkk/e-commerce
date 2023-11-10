@@ -1,30 +1,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BsStar, BsStarFill } from "react-icons/bs";
 import { FcCompactCamera } from "react-icons/fc";
 import { AiOutlineHeart } from "react-icons/ai";
-
-function StarRating({ rating }) {
-  const maxRating = 5;
-  const fullStars = Math.floor(rating);
-
-  const starIcons = [];
-
-  for (let i = 1; i <= maxRating; i++) {
-    if (i <= fullStars) {
-      starIcons.push(<BsStarFill key={i} className="text-yellow-400" />);
-    } else {
-      starIcons.push(<BsStar key={i} className=" text-gray-300" />);
-    }
-  }
-
-  return <div className="flex items-center">{starIcons}</div>;
-}
+import StarRating from "@/components/Star";
+import FavoriteButton from "@/components/FavoriteButton";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -52,7 +35,6 @@ export default function ProductList() {
                 src={product.image}
                 width={600}
                 height={400}
-                // layout="responsive"
                 title={product.title}
                 alt={product.title}
               />
@@ -66,12 +48,7 @@ export default function ProductList() {
               </div>
             </Link>
             <div className="absolute right-1 lg:top-2 -top-2 z-20 cursor-pointer group">
-              <div className="flex items-center justify-center border border-white bg-[#f08d82] text-white rounded-full w-8 h-8 hover:border-[#f55645] group-hover:bg-[#f55645]">
-                <AiOutlineHeart
-                  size={18}
-                  className="text-white"
-                />
-              </div>
+            <FavoriteButton  productId={product.id}/>
             </div>
             <div className="relative z-50 border-t-2 w-full pt-3 pb-3">
               <h3 className="lg:text-base font-normal">
