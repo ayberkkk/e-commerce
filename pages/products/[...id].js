@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import Header from "@/layouts/Header";
 import { useMember } from "@/utils/const";
 import { addToCart } from "@/utils/const";
+import { useRouter } from "next/router";
 import { FcCompactCamera } from "react-icons/fc";
 import { AiOutlineHeart } from "react-icons/ai";
+import Link from "next/link";
+import Image from "next/image";
+import Header from "@/layouts/Header";
 import StarRating from "@/components/Star";
 import AddToCartButton from "@/components/AddCart";
 import FavoriteButton from "@/components/FavoriteButton";
@@ -161,7 +161,7 @@ const ProductDetail = () => {
                     <ul className="flex items-center mt-4">
                       <li>
                         <button
-                          className="border text-3xl bg-[#517a98] hover:bg-[#517a98]/80 text-white w-[40px] h-[40px] rounded-tl-lg rounded-bl-lg"
+                          className="border text-3xl bg-[#517a98] hover:bg-red-500 text-white w-[40px] h-[40px] rounded-tl-lg rounded-bl-lg"
                           onClick={decreaseQuantity}
                         >
                           -
@@ -172,7 +172,7 @@ const ProductDetail = () => {
                       </li>
                       <li>
                         <button
-                          className="border text-3xl bg-[#517a98] hover:bg-[#517a98]/80 text-white w-[40px] h-[40px] rounded-tr-lg rounded-br-lg"
+                          className="border text-3xl bg-[#517a98] hover:bg-green-500 text-white w-[40px] h-[40px] rounded-tr-lg rounded-br-lg"
                           onClick={increaseQuantity}
                         >
                           +
@@ -184,16 +184,23 @@ const ProductDetail = () => {
                 {userLoggedIn ? (
                   <div className="lg:w-1/2 w-full lg:relative fixed lg:bg-transparent bg-white lg:border-0 border-t-2 -bottom-2 left-0 flex items-center gap-3 justify-center mt-2 mb-2 lg:px-0 px-1 lg:py-0 py-1">
                     <AddToCartButton
-                      onClick={() =>
-                        addToCart(
-                          id,
-                          productDetail,
-                          quantity,
-                          cart,
-                          updateCartInStorage
-                        )
-                      }
+                      productId={productDetail.id}
+                      productDetail={productDetail}
+                      image={productDetail.image}
+                      price={productDetail.price}
+                      quantity={quantity}
+                      addToCart={() => {
+                        addToCart({
+                          id: productDetail.id,
+                          title: productDetail.title,
+                          image: productDetail.image,
+                          price: productDetail.price,
+                          quantity: quantity,
+                        });
+                        setQuantity(1); // Sepete ekleme yapıldıktan sonra quantity'yi sıfırla
+                      }}
                     />
+
                     <div className="group mt-2 cursor-pointer">
                       <FavoriteButton productId={id} />
                     </div>

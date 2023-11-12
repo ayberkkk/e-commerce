@@ -1,7 +1,23 @@
-export default function AddToCartButton({ onClick }) {
+import { useCart } from "@/context/CartContext";
+
+export default function AddToCartButton({
+  productId,
+  productDetail,
+  image,
+  price,
+  quantity,
+}) {
+  const { addToCart } = useCart();
+
   const handleClick = (e) => {
     e.preventDefault();
-    onClick();
+    addToCart({
+      id: productId,
+      title: productDetail.title,
+      image: image,
+      price: price,
+      quantity: quantity,
+    });
   };
 
   return (

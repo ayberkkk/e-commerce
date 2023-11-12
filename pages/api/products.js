@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FcCompactCamera } from "react-icons/fc";
-import { AiOutlineHeart } from "react-icons/ai";
 import StarRating from "@/components/Star";
 import FavoriteButton from "@/components/FavoriteButton";
 

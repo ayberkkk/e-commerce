@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import CategoryList from "@/pages/api/category";
+import { useCart } from "@/context/CartContext";
 import { Menu } from "@headlessui/react";
 import { useMember } from "@/utils/const";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -14,6 +15,7 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 export default function Header() {
   const [mobile, setMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState();
+  const { cart } = useCart();
 
   const { userLoggedIn, handleLogout } = useMember();
 
@@ -118,10 +120,15 @@ export default function Header() {
               </div>
             </Link>
             <Link
-              href={"/"}
-              className="border border-[#517a98] text-black rounded-md p-2 bg-transparent transition-all hover:bg-[#517a98] hover:text-white"
+              href={"/basket"}
+              className="border border-[#517a98] text-black rounded-md p-2 bg-transparent transition-all relative hover:bg-[#517a98] hover:text-white"
             >
               <PiBasketLight size={20} />
+              {cart.length > 0 && (
+                <span className="absolute -top-3 -right-3 bg-blue-300 text-white rounded-full px-2 py-1 text-xs">
+                  {cart.length}
+                </span>
+              )}
             </Link>
           </>
         ) : (
