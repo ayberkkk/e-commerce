@@ -24,13 +24,13 @@ export default function ProductList() {
     <>
       {products.map((product) => (
         <div
-          className="border border-gray-200 rounded-lg p-3 lg:m-3 m-1 lg:px-4 relative z-50"
+          className="border border-gray-200 rounded-lg p-3 lg:m-3 m-1 lg:px-4 relative z-50 shadow-sm transition-shadow ease-in hover:shadow-lg"
           key={product.id}
         >
           <div className="relative z-50">
             <Link href={`/products/${product.id}`}>
               <Image
-                className="object-contain lg:h-72 h-52 w-96 mb-5 transition-all hover:scale-105"
+                className="object-contain lg:h-72 h-52 w-96 mb-5 transition-all ease-in hover:scale-105"
                 src={product.image}
                 width={600}
                 height={400}
@@ -47,7 +47,9 @@ export default function ProductList() {
               </div>
             </Link>
             <div className="absolute right-1 lg:top-2 -top-2 z-20 cursor-pointer group">
-            <FavoriteButton  productId={product.id}/>
+              <FavoriteButton
+                productId={product.id}
+              />
             </div>
             <div className="relative z-50 border-t-2 w-full pt-3 pb-3">
               <h3 className="lg:text-base font-normal">

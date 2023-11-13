@@ -132,6 +132,9 @@ const ProductDetail = () => {
                   width={200}
                   height={200}
                 />
+                <div className="absolute right-4 lg:top-2 top-3 z-20 cursor-pointer group">
+                  <FavoriteButton productId={id} />
+                </div>
               </div>
               <div>
                 <p>
@@ -142,22 +145,22 @@ const ProductDetail = () => {
                     {productDetail.title}
                   </span>
                 </p>
-                <div className="flex items-center gap-2 mt-6 mb-2">
+                <div className="flex items-center gap-2 lg:mt-6 mt-4 lg:mb-2">
                   <StarRating rating={productDetail.rating.rate} />
                   <span className="text-gray-400 text-base">
-                    {productDetail.rating.rate}{" "}
+                    {productDetail.rating.rate}
                   </span>
                   <span className="text-gray-400 text-xs">
                     ({productDetail.rating.count})
                   </span>
                   <FcCompactCamera />
                 </div>
-                <ul className="flex items-center lg:justify-start justify-between gap-10 mt-6 mb-5">
-                  <li className="text-green-500 font-bold text-5xl">
+                <ul className="flex items-center lg:justify-start justify-between lg:gap-10 lg:mt-6 lg:mb-5">
+                  <li className="text-green-500 font-bold text-5xl lg:block hidden">
                     {productDetail.price}
                     <span className="text-lg ml-1">$</span>
                   </li>
-                  <li className="relative">
+                  <li className="relative lg:block hidden">
                     <ul className="flex items-center mt-4">
                       <li>
                         <button
@@ -182,7 +185,7 @@ const ProductDetail = () => {
                   </li>
                 </ul>
                 {userLoggedIn ? (
-                  <div className="lg:w-1/2 w-full lg:relative fixed lg:bg-transparent bg-white lg:border-0 border-t-2 -bottom-2 left-0 flex items-center gap-3 justify-center mt-2 mb-2 lg:px-0 px-1 lg:py-0 py-1">
+                  <div className="lg:w-1/2 w-full lg:relative fixed lg:bg-transparent bg-white lg:border-0 border-t-2 -bottom-2 left-0 flex items-center gap-3 justify-center lg:mt-2 lg:mb-2 lg:px-0 px-3 lg:py-0 py-1">
                     <AddToCartButton
                       productId={productDetail.id}
                       productDetail={productDetail}
@@ -197,12 +200,35 @@ const ProductDetail = () => {
                           price: productDetail.price,
                           quantity: quantity,
                         });
-                        setQuantity(1); // Sepete ekleme yapıldıktan sonra quantity'yi sıfırla
+                        setQuantity(1);
                       }}
                     />
-
-                    <div className="group mt-2 cursor-pointer">
-                      <FavoriteButton productId={id} />
+                    <div className="lg:hidden block">
+                      <ul className="flex items-center lg:mt-4">
+                        <li>
+                          <button
+                            className="border text-xl bg-[#517a98]/70 transition-all ease-in hover:bg-red-500 text-white w-[30px] h-[30px] rounded-tl-lg rounded-bl-lg"
+                            onClick={decreaseQuantity}
+                          >
+                            -
+                          </button>
+                        </li>
+                        <li className="w-[30px] h-[30px] text-center mt-2 bg-white/90">
+                          {quantity}
+                        </li>
+                        <li>
+                          <button
+                            className="border text-xl bg-[#517a98]/70 transition-all ease-in hover:bg-green-500 text-white w-[30px] h-[30px] rounded-tr-lg rounded-br-lg"
+                            onClick={increaseQuantity}
+                          >
+                            +
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="text-green-500 font-bold text-3xl text-center lg:hidden block">
+                      {productDetail.price}
+                      <span className="text-lg ml-1">$</span>
                     </div>
                   </div>
                 ) : (

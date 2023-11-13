@@ -41,7 +41,7 @@ export const CartProvider = ({ children }) => {
       });
     }
 
-    setCartInLocalStorage(); // localStorage'ı güncelle
+    setCartInLocalStorage();
   };
 
   const setCartInLocalStorage = () => {
@@ -64,9 +64,21 @@ export const CartProvider = ({ children }) => {
     setCartInLocalStorage();
   };
 
+
+  const clearCart = () => {
+    setCart([]);
+    setCartInLocalStorage();
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateCartQuantity }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        updateCartQuantity,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>

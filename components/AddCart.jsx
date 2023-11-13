@@ -23,7 +23,7 @@ export default function AddToCartButton({
   return (
     <button
       type="submit"
-      className="text-base w-full mt-3 p-2 bg-[#517a98] hover:bg-[#517a98]/80 rounded-lg text-white transition-all"
+      className="lg:mb-0 mb-3 text-base w-full mt-3 p-2 bg-[#517a98] hover:bg-[#517a98]/80 rounded-lg text-white transition-all"
       onClick={handleClick}
     >
       Add

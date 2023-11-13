@@ -81,7 +81,7 @@ export default function Header() {
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href="/account"
+                        href="/orders"
                         className={`${
                           active ? "bg-green-500 text-white" : "text-gray-900"
                         } group flex items-center gap-2 px-4 py-2 text-md`}
@@ -109,7 +109,7 @@ export default function Header() {
                 </Menu.Items>
               )}
             </Menu>
-            <Link href={"/"}>
+            <Link href={"/favorites"}>
               <div className="group">
                 <div className="flex items-center justify-center border border-[#f55645] rounded-full w-10 h-10 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
                   <AiOutlineHeart

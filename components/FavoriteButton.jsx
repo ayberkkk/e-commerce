@@ -6,19 +6,17 @@ const FavoriteButton = ({ productId }) => {
 
   const initialIsFavorite =
     JSON.parse(localStorage.getItem(localStorageKey)) || false;
-
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
 
   const favoriteToggle = () => {
     const newIsFavorite = !isFavorite;
     setIsFavorite(newIsFavorite);
-
     localStorage.setItem(localStorageKey, JSON.stringify(newIsFavorite));
   };
 
   return (
     <div
-      className={`flex items-center justify-center border border-gray-500 rounded-full w-9 h-9 hover:border-[#f55645] group-hover:bg-[#f55645]/90`}
+      className={`flex items-center justify-center border bg-white shadow-lg border-gray-200 rounded-full w-10 h-10 hover:border-[#f55645] group-hover:bg-[#f55645]/90`}
       onClick={favoriteToggle}
     >
       {isFavorite ? (
