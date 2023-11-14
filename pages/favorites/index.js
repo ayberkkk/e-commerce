@@ -1,7 +1,5 @@
-import Cart from "@/components/Cart";
 import Header from "@/layouts/Header";
 import React from "react";
-import ProductList from "../api/products";
 
 const FavoriteList = ({ favoriteProducts }) => {
   return (

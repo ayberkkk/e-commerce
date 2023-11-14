@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { v4 as uuidv4 } from "uuid";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [orderHistory, setOrderHistory] = useState([]);
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart"));
@@ -12,6 +14,10 @@ export const CartProvider = ({ children }) => {
       setCart(storedCart);
     }
   }, []);
+
+  const setCartInLocalStorage = () => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
 
   const addToCart = (item) => {
     const existingItemIndex = cart.findIndex(
@@ -44,10 +50,6 @@ export const CartProvider = ({ children }) => {
     setCartInLocalStorage();
   };
 
-  const setCartInLocalStorage = () => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  };
-
   const updateCartQuantity = (itemId, quantity) => {
     const updatedCart = cart.map((item) =>
       item.id === itemId
@@ -64,16 +66,24 @@ export const CartProvider = ({ children }) => {
     setCartInLocalStorage();
   };
 
-
   const clearCart = () => {
+    setOrderHistory((prevOrders) => [
+      ...prevOrders,
+      { id: uuidv4(), items: cart, total: calculateTotalPrice() },
+    ]);
     setCart([]);
     setCartInLocalStorage();
+  };
+
+  const calculateTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   return (
     <CartContext.Provider
       value={{
         cart,
+        orderHistory,
         addToCart,
         removeFromCart,
         updateCartQuantity,

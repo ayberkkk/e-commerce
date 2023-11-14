@@ -56,7 +56,7 @@ export default function ProductList() {
                 <span className="font-bold uppercase mr-1">
                   {product.category}
                 </span>
-                {product.title.slice(0, 20)}
+                {product.title}
               </h3>
               <div className="flex gap-2 mt-2 mb-2">
                 <StarRating rating={product.rating.rate} />

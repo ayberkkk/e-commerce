@@ -1,10 +1,13 @@
 import Header from "@/layouts/Header";
-import { v4 as uuidv4 } from "uuid";
+import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 
 const Confirm = () => {
-  const orderId = uuidv4();
+  const { orderHistory } = useCart();
+  const orderId =
+    orderHistory.length > 0 ? orderHistory[orderHistory.length - 1].id : null;
+
   return (
     <>
       <Header />
@@ -25,9 +28,11 @@ const Confirm = () => {
               <p className="text-lg">
                 Your order has been successfully placed.
               </p>
-              <p className="text-lg">
-                Order ID: <b>{orderId}</b>
-              </p>
+              {orderId && (
+                <p className="text-lg">
+                  Order ID: <b>{orderId}</b>
+                </p>
+              )}
               <div className="flex items-center gap-3">
                 <Link
                   href={"/orders"}

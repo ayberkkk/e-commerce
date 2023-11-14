@@ -1,13 +1,13 @@
-import { Formik, Field, Form } from "formik";
-import Link from "next/link";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import Swal from "sweetalert2";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import { firebaseConfig } from "@/pages/api/firebase";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
+import { BsEyeSlash, BsEye } from "react-icons/bs";
+import Link from "next/link";
+import Swal from "sweetalert2";
+import Image from "next/image";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -19,12 +19,12 @@ export default function LoginForm() {
   const handleLogin = async (values) => {
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password);
-      Swal.fire("Başarılı!", "Giriş başarılı.", "success");
+      Swal.fire("Success!", "Login successful.", "success");
       localStorage.setItem("isLoggedIn", "true");
 
       router.push("/");
     } catch (error) {
-      Swal.fire("Hata!", error.message, "error");
+      Swal.fire("Error!", error.message, "error");
     }
   };
   return (
@@ -36,6 +36,16 @@ export default function LoginForm() {
           password: "",
         }}
         onSubmit={handleLogin}
+        validate={(values) => {
+          const errors = {};
+          if (!values.email) {
+            errors.email = "Email is required";
+          }
+          if (!values.password) {
+            errors.password = "Password is required";
+          }
+          return errors;
+        }}
       >
         <Form className="absolute lg:left-40 left-0 top-[24%] p-4 m-3">
           <div className="flex items-center gap-3">
@@ -48,7 +58,6 @@ export default function LoginForm() {
                 height={40}
               />
             </Link>
-
             <p className="text-white font-bold text-lg">
               E-Commerce from aborkkk
             </p>
@@ -62,6 +71,11 @@ export default function LoginForm() {
               placeholder="info@example.com"
               type="email"
             />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-red-500 font-bold text-xs"
+            />
           </div>
           <div className="mt-3 relative">
             <label htmlFor="password">Password</label>
@@ -71,6 +85,11 @@ export default function LoginForm() {
               className="login-input"
               placeholder="*******"
               type={showPassword ? "text" : "password"}
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="text-red-500 font-bold text-xs"
             />
             <div className="absolute right-4 top-11 opacity-20 flex items-center">
               <BsEyeSlash

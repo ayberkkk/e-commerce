@@ -11,6 +11,7 @@ import { SlLogout } from "react-icons/sl";
 import { PiBasketLight } from "react-icons/pi";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { RiAdminLine } from "react-icons/ri";
 
 export default function Header() {
   const [mobile, setMobile] = useState(false);
@@ -69,7 +70,7 @@ export default function Header() {
             <Menu as="div" className="relative">
               <div>
                 <Menu.Button
-                  className="flex items-center gap-2 bg-[#517a98] text-white rounded-md p-2 transition-all hover:bg-green-700"
+                  className="flex items-center gap-2 bg-[#517a98] text-white rounded-lg p-2 transition-all hover:bg-green-700"
                   onClick={toggleMenu}
                 >
                   Account
@@ -77,7 +78,20 @@ export default function Header() {
                 </Menu.Button>
               </div>
               {menuOpen && (
-                <Menu.Items className="origin-top-right absolute left-0 mt-2 w-32 rounded-md shadow-lg bg-[whiteSmoke] ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="origin-top-right absolute left-0 mt-2 w-32 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        href="/admin"
+                        className={`${
+                          active ? "bg-green-500 text-white" : "text-gray-900"
+                        } group flex items-center gap-2 px-4 py-2 text-md`}
+                      >
+                        <RiAdminLine />
+                        Admin
+                      </Link>
+                    )}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <Link
@@ -111,7 +125,7 @@ export default function Header() {
             </Menu>
             <Link href={"/favorites"}>
               <div className="group">
-                <div className="flex items-center justify-center border border-[#f55645] rounded-full w-10 h-10 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
+                <div className="flex items-center justify-center border border-[#f55645] rounded-lg w-10 h-10 hover:border-[#f55645] group-hover:bg-[#f55645]/90">
                   <AiOutlineHeart
                     size={18}
                     className="text-[#f55645] group-hover:text-white"
@@ -121,7 +135,7 @@ export default function Header() {
             </Link>
             <Link
               href={"/basket"}
-              className="border border-[#517a98] text-black rounded-md p-2 bg-transparent transition-all relative hover:bg-[#517a98] hover:text-white"
+              className="border border-[#517a98] text-black rounded-lg p-2 bg-transparent transition-all relative hover:bg-[#517a98] hover:text-white"
             >
               <PiBasketLight size={20} />
               {cart.length > 0 && (
@@ -134,13 +148,13 @@ export default function Header() {
         ) : (
           <>
             <Link
-              className="bg-[#517a98] text-white rounded-md p-2 transition-all hover:bg-green-500"
+              className="bg-[#517a98] text-white rounded-lg p-2 transition-all hover:bg-green-500"
               href="/user/login"
             >
               Login
             </Link>
             <Link
-              className="border border-[#517a98] text-black rounded-md p-2 bg-transparent transition-all hover:bg-[#517a98] hover:text-white"
+              className="border border-[#517a98] text-black rounded-lg p-2 bg-transparent transition-all hover:bg-[#517a98] hover:text-white"
               href="/user/register"
             >
               Register

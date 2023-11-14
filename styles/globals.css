@@ -7,7 +7,7 @@
 }
 
 .login-form .login-bg {
-  @apply fixed inset-0 bg-cover bg-no-repeat -z-10;
+  @apply fixed inset-0 bg-cover bg-no-repeat -z-10 rotate-180;
   background-image: url("../assets/images/wave.svg");
 }
 
@@ -25,7 +25,7 @@
 }
 
 .login-form .login-input {
-  @apply text-white border border-white rounded-md block bg-transparent w-full p-2;
+  @apply text-white border border-white rounded-lg block bg-transparent w-full p-2;
 }
 
 .login-form ::placeholder {

@@ -1,12 +1,12 @@
-import { Formik, Field, Form } from "formik";
-import { initializeApp } from "firebase/app";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseConfig } from "@/pages/api/firebase";
+import { initializeApp } from "firebase/app";
+import { useState } from "react";
+import { BsEyeSlash, BsEye } from "react-icons/bs";
 import Swal from "sweetalert2";
 import Image from "next/image";
 import Link from "next/link";
-import { BsEyeSlash, BsEye } from "react-icons/bs";
-import { useState } from "react";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -21,10 +21,10 @@ export default function RegisterForm() {
         values.password
       );
       const user = userCredential.user;
-      Swal.fire("Başarılı!", "Kayıt işlemi tamamlandı.", "success");
+      Swal.fire("Success!", "Registration is complete.", "success");
       resetForm();
     } catch (error) {
-      Swal.fire("Hata!", error.message, "error");
+      Swal.fire("Error!", error.message, "error");
       resetForm();
     }
   };
@@ -37,6 +37,19 @@ export default function RegisterForm() {
           name: "",
           email: "",
           password: "",
+        }}
+        validate={(values) => {
+          const errors = {};
+          if (!values.name) {
+            errors.name = "Name is required";
+          }
+          if (!values.email) {
+            errors.email = "Email is required";
+          }
+          if (!values.password) {
+            errors.password = "Password is required";
+          }
+          return errors;
         }}
         onSubmit={handleRegistration}
       >
@@ -64,6 +77,11 @@ export default function RegisterForm() {
               placeholder="Full Name"
               type="text"
             />
+            <ErrorMessage
+              name="name"
+              component="div"
+              className="text-red-500 font-bold text-xs"
+            />
           </div>
           <div className="mt-3">
             <label htmlFor="email">Email</label>
@@ -74,6 +92,11 @@ export default function RegisterForm() {
               placeholder="info@example.com"
               type="email"
             />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-red-500 font-bold text-xs"
+            />
           </div>
           <div className="mt-3 relative">
             <label htmlFor="password">Password</label>
@@ -83,6 +106,11 @@ export default function RegisterForm() {
               className="login-input"
               placeholder="*******"
               type={showPassword ? "text" : "password"}
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="text-red-500 font-bold text-xs"
             />
             <div className="absolute right-4 top-11 opacity-20 flex items-center">
               <BsEyeSlash
@@ -96,17 +124,11 @@ export default function RegisterForm() {
                 onClick={() => setShowPassword(false)}
               />
             </div>
-            <Link
-              href={"/"}
-              className="text-white text-xs text-end opacity-50 transition-opacity hover:opacity-100"
-            >
-              Forgot Password
-            </Link>
           </div>
           <div className="table m-auto w-full text-center">
             <button
               type="submit"
-              className="bg-[#517a98] w-full m-auto table rounded-md text-white mt-4 p-3 transition-all hover:bg-[#517a98]/80"
+              className="bg-[#517a98] w-full m-auto table rounded-lg text-white mt-4 p-3 transition-all hover:bg-[#517a98]/80"
             >
               Register
             </button>
@@ -114,7 +136,7 @@ export default function RegisterForm() {
             <Link href={"/user/login"}>
               <button
                 type="submit"
-                className="bg-green-500 w-1/2 m-auto table rounded-md text-white mt-4 p-3 transition-all hover:bg-[#517a98]/80"
+                className="bg-green-500 w-1/2 m-auto table rounded-lg text-white mt-4 p-3 transition-all hover:bg-[#517a98]/80"
               >
                 Login
               </button>

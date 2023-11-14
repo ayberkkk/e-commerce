@@ -39,16 +39,21 @@ const Basket = () => {
   if (cart.length === 0) {
     return (
       <div className="container mx-auto text-center">
-        <p className="text-3xl font-bold mt-10 mb-5">Your Basket is Empty</p>
-        <p className="text-lg mb-5">
-          Explore our products and add some items to your basket.
-        </p>
-        <Link
-          href={"/"}
-          className="text-white bg-[#517a98] py-2 px-4 rounded-md inline-block transition-all ease-in hover:bg-[#517a98]/80"
-        >
-          Explore Products
-        </Link>
+        <div className=" flex items-center justify-center h-screen">
+          <div className="table w-full m-auto">
+          <Image className="object-cover table lg:w-[250px] mx-auto mb-10" src="/logo.png" width={100} height={100}/>
+            <p className="text-3xl font-bold mb-5">Your Basket is Empty :(</p>
+            <p className="text-lg mb-5">
+              Explore our products and add some items to your basket.
+            </p>
+            <Link
+              href={"/"}
+              className="text-white bg-[#517a98] py-2 px-4 rounded-lg inline-block transition-all ease-in hover:bg-[#517a98]/80"
+            >
+              Explore Products
+            </Link>
+          </div>
+        </div>
       </div>
     );
   } else {
@@ -138,7 +143,7 @@ const Basket = () => {
           <div className="lg:col-span-2 relative lg:h-[60vh] h-auto">
             <Link
               href={"/confirm"}
-              className="lg:block hidden mt-3 text-center bg-green-500 w-full rounded-md text-white p-2 transition-all ease-in hover:bg-[#517a98]/80"
+              className="lg:block hidden mt-3 text-center bg-green-500 w-full rounded-lg text-white p-2 transition-all ease-in hover:bg-[#517a98]/80"
               onClick={handleOrderConfirmation}
             >
               Confirm
@@ -152,7 +157,7 @@ const Basket = () => {
             <div className="lg:absolute fixed bottom-3 lg:bottom-0 w-full lg:px-0 px-5">
               <Link
                 href={"/confirm"}
-                className="block text-center bg-green-500 w-full rounded-md text-white p-2 transition-all ease-in hover:bg-[#517a98]/80"
+                className="block text-center bg-green-500 w-full rounded-lg text-white p-2 transition-all ease-in hover:bg-[#517a98]/80"
                 onClick={handleOrderConfirmation}
               >
                 Confirm
