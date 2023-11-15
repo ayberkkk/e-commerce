@@ -55,39 +55,8 @@ export const adminMenu = [
     path: "/admin/pages/members",
     title: "Members",
   },
+  {
+    path: "/",
+    title: "Web Site",
+  },
 ];
-// export const addToCart = (id, productDetail, quantity) => {
-//   const { cart, addToCart: updateCartInContext } = useCart();
-
-//   if (quantity === 0) {
-//     Swal.fire({
-//       title: "Product Not Added to Cart",
-//       text: "The quantity is 0, so the product cannot be added to the cart.",
-//       icon: "error",
-//     });
-//   } else {
-//     const existingItemIndex = cart.findIndex((item) => item.id === id);
-
-//     if (existingItemIndex !== -1) {
-//       const updatedCart = [...cart];
-//       updatedCart[existingItemIndex].quantity += quantity;
-//       updateCartInContext(updatedCart);
-//       localStorage.setItem("cart", JSON.stringify(updatedCart));
-//     } else {
-//       const newItem = {
-//         id,
-//         title: productDetail.title,
-//         quantity,
-//       };
-//       const updatedCart = [...cart, newItem];
-//       updateCartInContext(updatedCart);
-//       localStorage.setItem("cart", JSON.stringify(updatedCart));
-//     }
-
-//     Swal.fire({
-//       title: "Product Added to Cart",
-//       html: `<b>${productDetail.title}</b> product has been added to your cart with a quantity of <b>${quantity}</b>.`,
-//       icon: "success",
-//     });
-//   }
-// };
