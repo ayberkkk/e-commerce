@@ -13,6 +13,9 @@ const ProductList = () => {
           amount: 0,
         }));
         setProducts(productsWithAmount);
+      })
+      .catch((error) => {
+        console.error("Veri çekme hatası:", error);
       });
   }, []);
 

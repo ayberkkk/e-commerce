@@ -8,7 +8,7 @@ export default function AdminHeader() {
         <ul className="flex items-center justify-start gap-10">
           {adminMenu.map((menu) => (
             <Link
-              key={menu.id}
+              key={menu}
               href={menu.path}
               className="flex items-center justify-start"
             >

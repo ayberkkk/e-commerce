@@ -76,15 +76,15 @@ export const adminMenu = [
     title: "Home",
   },
   {
-    path: "/",
+    path: "/admin/pages/products",
     title: "Products",
   },
   {
-    path: "/",
+    path: "/admin/pages/orders",
     title: "Orders",
   },
   {
-    path: "/",
+    path: "/admin/pages/members",
     title: "Members",
   },
   {

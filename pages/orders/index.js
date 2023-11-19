@@ -1,8 +1,5 @@
-// Orders.js
-
 import Header from "@/layouts/Header";
 import { useCart } from "@/context/CartContext";
-import Link from "next/link";
 import Image from "next/image";
 import { Disclosure } from "@headlessui/react";
 

@@ -35,3 +35,7 @@
 .login-form .login-input:focus {
   @apply border-2;
 }
+
+.admin-input {
+  @apply text-gray-600 border w-full border-black/40 rounded-lg block bg-transparent p-2;
+}
