@@ -1,17 +1,24 @@
-import { fetchProducts } from "@/utils/api";
 import React, { useState, useEffect } from "react";
 import AdminHeader from "../layouts/Header";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminProducts = () => {
   const [productList, setProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [fetchError, setFetchError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const products = await fetchProducts();
-      setProductList(products);
+      try {
+        const response = await axios.get("http://localhost:3001/products");
+        setProductList(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setFetchError("Error fetching products. Please try again.");
+      }
     };
 
     fetchData();
@@ -23,28 +30,13 @@ const AdminProducts = () => {
     setModalOpen(true);
   };
 
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-
-//     if (file) {
-//       const reader = new FileReader();
-//       reader.onload = (e) => {
-//         const imageSrc = e.target.result;
-//         setSelectedProduct((prev) => ({
-//           ...prev,
-//           image: imageSrc,
-//         }));
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`https://fakestoreapi.com/products/${id}`);
+      await axios.delete(`http://localhost:3001/products/${id}`);
       setProductList(productList.filter((product) => product.id !== id));
+      toast.success("Product deleted successfully!");
     } catch (error) {
+      toast.error("Error deleting product. Please try again.");
       console.error("Error deleting product:", error);
     }
   };
@@ -52,12 +44,15 @@ const AdminProducts = () => {
   const handleUpdate = async () => {
     try {
       const response = await axios.put(
-        `https://fakestoreapi.com/products/${selectedProduct.id}`,
+        `http://localhost:3001/products/${selectedProduct.id}`,
         selectedProduct
       );
 
       console.log("Product updated:", response.data);
       setModalOpen(false);
+
+      toast.success("Product updated successfully!");
+
       setProductList((prevProducts) => {
         const updatedIndex = prevProducts.findIndex(
           (product) => product.id === selectedProduct.id
@@ -73,12 +68,15 @@ const AdminProducts = () => {
       });
     } catch (error) {
       console.error("Error updating product:", error);
+      // Show error message
+      toast.error("Error updating product. Please try again.");
     }
   };
 
   return (
     <div>
       <AdminHeader />
+      {fetchError && <p>{fetchError}</p>}
       <h1 className="text-2xl font-bold mb-4">Product Management</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
@@ -211,6 +209,7 @@ const AdminProducts = () => {
           </div>
         </div>
       )}
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

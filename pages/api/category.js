@@ -13,11 +13,13 @@ function CategoryList() {
   return (
     <ul className="justify-center lg:flex block">
       {categories.map((category) => (
-        <li className="mt-5 lg:block table mx-auto relative lg:-top-[10px] top-36">
+        <li
+          key={category}
+          className="mt-5 lg:block table mx-auto relative lg:-top-[10px] top-36"
+        >
           <Link
             href={`/category/${category}`}
             passHref
-            key={category}
             className="text-base uppercase p-4 scale-100 transition-all lg:hover:scale-105"
           >
             {category}

@@ -5,7 +5,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("http://localhost:3001/products")
       .then((res) => res.json())
       .then((data) => {
         const productsWithAmount = data.map((product) => ({

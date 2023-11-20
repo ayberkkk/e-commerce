@@ -83,6 +83,7 @@ export default function Header() {
                     {({ active }) => (
                       <Link
                         href="/admin"
+                        target="_blank"
                         className={`${
                           active ? "bg-green-500 text-white" : "text-gray-900"
                         } group flex items-center gap-2 px-4 py-2 text-md`}
