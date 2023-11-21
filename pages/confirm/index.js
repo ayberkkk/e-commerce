@@ -16,10 +16,11 @@ const Confirm = () => {
           <div className="lg:col-span-4">
             <Image
               src="/confirm.gif"
-              alt="Order Confirmation"
               className="w-full"
               width={100}
               height={100}
+              title="Confirm"
+              alt="Confirm"
             />
           </div>
           <div className="lg:col-span-8 flex items-center justify-center p-3">

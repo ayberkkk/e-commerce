@@ -131,6 +131,8 @@ const ProductDetail = () => {
                   src={productDetail.image}
                   width={200}
                   height={200}
+                  title={productDetail.title}
+                  alt={productDetail.title}
                 />
                 <div className="absolute right-4 lg:top-2 top-3 z-20 cursor-pointer group">
                   <FavoriteButton productId={id} />

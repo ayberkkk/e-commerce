@@ -58,10 +58,11 @@ export default function RegisterForm() {
             <Link href={"/"}>
               <Image
                 className="w-full h-auto object-cover p-3"
-                // layout="responsive"
                 src="/logo.png"
                 width={100}
                 height={40}
+                title="Logo"
+                alt="Logo"
               />
             </Link>
             <p className="text-white font-bold text-lg">

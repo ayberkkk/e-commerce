@@ -36,6 +36,8 @@ export default function Header() {
             src="/logo.png"
             width={50}
             height={40}
+            title="Logo"
+            alt="Logo"
           />
         </Link>
         {mobile ? (

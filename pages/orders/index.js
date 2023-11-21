@@ -23,12 +23,13 @@ const Orders = () => {
                       <>
                         <Disclosure.Button className="flex justify-between text-white items-center w-full p-3 bg-[#517a98] rounded-lg">
                           <p className="text-lg">
-                            Order<span className="font-bold ml-3">#{order.id}</span>{" "}
+                            Order
+                            <span className="font-bold ml-3">#{order.id}</span>{" "}
                           </p>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`${
-                              open ? 'transform rotate-180' : ''
+                              open ? "transform rotate-180" : ""
                             } w-6 h-6 text-white transition-all ease-in duration-150`}
                             fill="none"
                             viewBox="0 0 24 24"
@@ -49,7 +50,9 @@ const Orders = () => {
                                 <th className="border-b-2 pb-3 pt-3 text-left">
                                   Image
                                 </th>
-                                <th className="border-b-2 pb-3 pt-3">Quantity</th>
+                                <th className="border-b-2 pb-3 pt-3">
+                                  Quantity
+                                </th>
                                 <th className="border-b-2 pb-3 pt-3">Price</th>
                                 <th className="border-b-2 pb-3 pt-3">Total</th>
                               </tr>
@@ -63,18 +66,25 @@ const Orders = () => {
                                       src={item.image}
                                       width={100}
                                       height={100}
+                                      title={item.title}
+                                      alt={item.title}
                                     />
                                     {item.title}
                                   </td>
                                   <td>{item.quantity}</td>
                                   <td>{item.price} $</td>
-                                  <td>{(item.quantity * item.price).toFixed(2)} $</td>
+                                  <td>
+                                    {(item.quantity * item.price).toFixed(2)} $
+                                  </td>
                                 </tr>
                               ))}
                             </tbody>
                             <tfoot>
                               <tr>
-                                <td colSpan="3" className="text-right font-bold">
+                                <td
+                                  colSpan="3"
+                                  className="text-right font-bold"
+                                >
                                   Total:
                                 </td>
                                 <td className="font-bold">

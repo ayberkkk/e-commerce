@@ -41,7 +41,7 @@ const Basket = () => {
       <div className="container mx-auto text-center">
         <div className=" flex items-center justify-center h-screen">
           <div className="table w-full m-auto">
-          <Image className="object-cover table lg:w-[250px] mx-auto mb-10" src="/logo.png" width={100} height={100}/>
+          <Image className="object-cover table lg:w-[250px] mx-auto mb-10" src="/logo.png" width={100} height={100} title="Logo" alt="Logo"/>
             <p className="text-3xl font-bold mb-5">Your Basket is Empty :(</p>
             <p className="text-lg mb-5">
               Explore our products and add some items to your basket.
@@ -91,6 +91,8 @@ const Basket = () => {
                         src={item.image}
                         width={100}
                         height={100}
+                        title={item.title}
+                        alt={item.title}
                       />
                     </td>
                     <td className="lg:block hidden mt-5">{item.title}</td>

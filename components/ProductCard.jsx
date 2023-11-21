@@ -27,6 +27,8 @@ const ProductCard = ({product}) => {
               src="/logo.png"
               width={40}
               height={40}
+              title="Logo"
+              alt="Logo"
             />
           </div>
         </Link>

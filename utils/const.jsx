@@ -72,7 +72,7 @@ export const addToCart = (id, productDetail, quantity) => {
 };
 export const adminMenu = [
   {
-    path: "/admin",
+    path: "/",
     title: "Home",
   },
   {
@@ -86,9 +86,5 @@ export const adminMenu = [
   {
     path: "/admin/pages/members",
     title: "Members",
-  },
-  {
-    path: "/",
-    title: "Web Site",
   },
 ];
